@@ -16,12 +16,24 @@ export const Home = () => {
   const [address, setAddress] = useState("")
   const [newId, setNewId] = useState(null);
 
-  function saveId(id){
-	setNewId(id);
+  function resetData(){
+	setNewId(null);
+	setName("");
+	setPhone("");
+	setEmail("");
+	setAddress("");
+
+  }
+
+  function saveId(obj){
+	setNewId(obj.id);
+	setName(obj.name);
+	setPhone(obj.phone);
+	setEmail(obj.email);
+	setAddress(obj.address);
   }
 
   const uploadContact = async () => {
-
 	
 		await collection.submitContact(name,phone,email,address)
 		const update = await collection.getContacts();
@@ -74,7 +86,7 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 
-<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick={() => resetData()}>
   Create new contact
 </button>
 
@@ -163,7 +175,7 @@ export const Home = () => {
 												<p><strong>E-mail: </strong>{el.email}</p>
 												<p><strong>Address: </strong>{el.address}</p>
 												<div>
-													<button className="rounded formatoBoton btn btn-success mx-2"  data-toggle="modal" data-target="#modal2" onClick={() => saveId(el.id)}><i className="fa-solid fa-pen-to-square"></i></button>
+													<button className="rounded formatoBoton btn btn-success mx-2"  data-toggle="modal" data-target="#modal2" onClick={() => saveId(el)}><i className="fa-solid fa-pen-to-square"></i></button>
 													<button className="rounded formatoBoton btn btn-danger mx-2" onClick={() => cleanContact(el.id)}><i className="fa-solid fa-trash"></i></button>
 												</div>
 											</div>)}
